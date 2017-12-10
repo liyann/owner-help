@@ -16,7 +16,7 @@ const style = StyleSheet.create({
     height: 50,
   },
   box1: {
-    backgroundColor: 'powderblue'
+    backgroundColor: 'powderblue',
   },
   box2: {
     backgroundColor: 'skyblue'
