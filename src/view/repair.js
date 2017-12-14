@@ -8,19 +8,31 @@ import {
   Text,
   List,
   ListItem,
+  Item,
+  Input,
   Body,
   Left,
-  Right
+  Right,
+  Card,
+  CardItem,
+  Title,
+  Picker,
+  Form,
 } from 'native-base'
 import {
   TouchableOpacity,
   View,
   TouchableWithoutFeedback,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput,
+  Image,
 } from 'react-native'
 import Modal from 'react-native-modal'
 import ImagePicker from 'react-native-image-picker'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { repairList } from '../static'
 
+const PickerItem = Picker.Item
 const photoOptions = {
   //底部弹出框选项
   title: '请选择',
@@ -33,23 +45,29 @@ const photoOptions = {
   noData: false,
   storageOptions: {
     skipBackup: true,
-    path: 'images'
-  }
+    path: 'images',
+  },
 }
 
-export default class Notification extends Component {
+export default class AddRepair extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isModalVisible: false
+      Imgs: [],
+      selected: undefined,
     }
   }
   setModalVisible = visible => {
     this.setState({ isModalVisible: visible })
   }
+  onValueChange = value => {
+    this.setState({
+      selected: value,
+    })
+  }
 
   openMycamera = () => {
-    console.log('click')
+    const { Imgs } = this.state
     ImagePicker.showImagePicker(photoOptions, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker')
@@ -62,76 +80,115 @@ export default class Notification extends Component {
 
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
+        console.log('====================================')
+        console.log(response)
+        console.log('====================================')
         this.setState({
-          avatarSource: source
+          Imgs: [
+            ...Imgs,
+            {
+              source: source,
+            },
+          ],
         })
       }
     })
   }
 
+  postMessage = () => {
+    return
+  }
+
   render() {
-    const { modalVisible } = this.state
+    const { Imgs } = this.state
+    const renderRepairList = repairList.map((item, index) => (
+      <PickerItem label={item.desc} value={item.value} key={index} />
+    ))
     return (
       <Container>
         <Header>
-          <Button
-            transaprent
-            style={{
-              position: 'absolute',
-              top: 5,
-              right: 15
-            }}
-            onPress={() => this.setModalVisible(true)}
-          >
-            <Icon
-              name="camera"
-              style={{
-                color: 'white',
-                fontSize: 30
-              }}
-            />
-          </Button>
+          <Body>
+            <Title>发起报修</Title>
+          </Body>
+          <Right>
+            <Button success onPress={() => this.postMessage()}>
+              <Text>发送</Text>
+            </Button>
+          </Right>
         </Header>
         <Content>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity onPress={() => this.setModalVisible(true)}>
-              <Text>Show Modal</Text>
-            </TouchableOpacity>
-            <Modal
-              isVisible={this.state.isModalVisible}
-              style={{ marginBottom: 0, paddingBottom: 0 }}
-              onBackButtonPress={() => this.setModalVisible(false)}
-            >
-              <TouchableHighlight>
-                {/* <TouchableHighlight onPress={() => this.setModalVisible(false)}> */}
-                <View
-                  style={{
-                    height: 500,
-                    backgroundColor: 'transparent',
-                    alignContent: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <View style={{ height: 250 }}>
-                    <List>
-                      <ListItem button onPress={() => this.openMycamera()}>
-                        <Body>
-                          <Text style={{ marginLeft: 20 }}>拍摄</Text>
-                          <Text note style={{ position: 'absolute', right: 5 }}>
-                            照片
-                          </Text>
-                        </Body>
-                      </ListItem>
-                      <ListItem button onPress={() => this.openMycamera()}>
-                        <Text style={{ marginLeft: 20 }}>从相册选取</Text>
-                      </ListItem>
-                    </List>
-                  </View>
-                </View>
-              </TouchableHighlight>
-            </Modal>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              padding: 10,
+              backgroundColor: '#D3D3D3',
+              height: 120,
+            }}
+          >
+            {Imgs.length > 0 &&
+              Imgs.map((img, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: img.source.uri }}
+                  style={{ width: 80, height: 80, marginRight: 10 }}
+                />
+              ))}
+            <TouchableHighlight onPress={() => this.openMycamera()}>
+              <View
+                style={{
+                  height: 80,
+                  width: 80,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                }}
+              >
+                <Icon
+                  name="ios-add-circle-outline"
+                  style={{ fontSize: 50, color: 'gray' }}
+                />
+              </View>
+            </TouchableHighlight>
           </View>
+          <Form>
+            <List>
+              <ListItem itemDivider>
+                <Text>报修描述</Text>
+              </ListItem>
+              <ListItem>
+                <Input
+                  placeholder="请用简短的话描述报修的内容"
+                  multiline={false}
+                />
+              </ListItem>
+              <ListItem itemDivider>
+                <Text>报修类型</Text>
+              </ListItem>
+              <ListItem>
+                <Picker
+                  placeholder="请选择一个报修项目"
+                  selectedValue={this.state.selected}
+                  onValueChange={this.onValueChange}
+                  style={{ width: 300 }}
+                >
+                  {renderRepairList}
+                </Picker>
+              </ListItem>
+              <ListItem itemDivider>
+                <Text>报修地址</Text>
+              </ListItem>
+              <ListItem>
+                <Text>碧水豪园 15# 327</Text>
+                <Text>李雁南 13588176510</Text>
+              </ListItem>
+            </List>
+          </Form>
         </Content>
       </Container>
     )
