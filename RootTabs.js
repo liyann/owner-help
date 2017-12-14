@@ -20,8 +20,8 @@ const RootTabs = TabNavigator(
             size={26}
             style={{ color: tintColor }}
           />
-        ),
-      },
+        )
+      }
     },
     Repair: {
       screen: Repair,
@@ -29,12 +29,12 @@ const RootTabs = TabNavigator(
         tabBarLabel: '报修',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
-            name={focused ? 'ios-camera' : 'ios-camera-outline'}
+            name={focused ? 'ios-add' : 'ios-add-outline'}
             size={26}
             style={{ color: tintColor }}
           />
-        ),
-      },
+        )
+      }
     },
     Profile: {
       screen: Profile,
@@ -46,9 +46,9 @@ const RootTabs = TabNavigator(
             size={26}
             style={{ color: tintColor }}
           />
-        ),
-      },
-    },
+        )
+      }
+    }
   },
   {
     tabBarPosition: 'bottom',
@@ -56,13 +56,13 @@ const RootTabs = TabNavigator(
     tabBarOptions: {
       showIcon: true,
       labelStyle: {
-        fontSize: 12,
+        fontSize: 12
       },
       style: {
-        backgroundColor: Style.globalColor,
-      },
-    },
-  },
+        backgroundColor: Style.globalColor
+      }
+    }
+  }
 )
 
 export default RootTabs

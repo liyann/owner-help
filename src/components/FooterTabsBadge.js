@@ -1,5 +1,15 @@
-import React, { Component } from 'react';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Badge } from 'native-base';
+import React, { Component } from 'react'
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Icon,
+  Text,
+  Badge
+} from 'native-base'
 export default class FooterTabsBadgeExample extends Component {
   render() {
     const { navigation } = this.props
@@ -9,16 +19,20 @@ export default class FooterTabsBadgeExample extends Component {
         <Footer>
           <FooterTab>
             <Button badge vertical onPress={() => navigation.navigate('Home')}>
-              <Badge><Text>2</Text></Badge>
+              <Badge>
+                <Text>2</Text>
+              </Badge>
               <Icon name="apps" />
               <Text>Apps</Text>
             </Button>
             <Button vertical>
-              <Icon name="camera" />
+              <Icon name="add" />
               <Text>Camera</Text>
             </Button>
             <Button active badge vertical>
-              <Badge ><Text>51</Text></Badge>
+              <Badge>
+                <Text>51</Text>
+              </Badge>
               <Icon active name="navigate" />
               <Text>Navigate</Text>
             </Button>
@@ -29,6 +43,6 @@ export default class FooterTabsBadgeExample extends Component {
           </FooterTab>
         </Footer>
       </Container>
-    );
+    )
   }
 }
