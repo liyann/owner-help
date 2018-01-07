@@ -1,54 +1,54 @@
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import {TabNavigator, StackNavigator} from 'react-navigation'
 import React from 'react'
-import { View, Text, Button, TextInput } from 'react-native'
+import {View, Text, Button, TextInput} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import FooterTabsBadge from './src/components/FooterTabsBadge'
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Notification from './src/view/notification'
-import Profile from './src/view/profile'
-import Repair from './src/view/repair'
-import Style from './src/style/global'
-const RootTabs = TabNavigator(
+import Notification from './notification'
+import Profile from './profile'
+import Style from '../themes/global'
+import HomeRepair from './repair/HomeRepair'
+
+export default TabNavigator(
   {
     Home: {
       screen: Notification,
       navigationOptions: {
         tabBarLabel: '通知',
-        tabBarIcon: ({ tintColor, focused }) => (
+        tabBarIcon: ({tintColor, focused}) => (
           <MCIcons
             name={focused ? 'email' : 'email-outline'}
             size={26}
-            style={{ color: tintColor }}
+            style={{color: tintColor}}
           />
-        )
-      }
+        ),
+      },
     },
     Repair: {
-      screen: Repair,
+      screen: HomeRepair,
       navigationOptions: {
         tabBarLabel: '报修',
-        tabBarIcon: ({ tintColor, focused }) => (
+        tabBarIcon: ({tintColor, focused}) => (
           <Ionicons
             name={focused ? 'ios-add' : 'ios-add-outline'}
             size={26}
-            style={{ color: tintColor }}
+            style={{color: tintColor}}
           />
-        )
-      }
+        ),
+      },
     },
     Profile: {
       screen: Profile,
       navigationOptions: {
         tabBarLabel: '我的',
-        tabBarIcon: ({ tintColor, focused }) => (
+        tabBarIcon: ({tintColor, focused}) => (
           <Ionicons
             name={focused ? 'ios-person' : 'ios-person-outline'}
             size={26}
-            style={{ color: tintColor }}
+            style={{color: tintColor}}
           />
-        )
-      }
-    }
+        ),
+      },
+    },
   },
   {
     tabBarPosition: 'bottom',
@@ -56,13 +56,11 @@ const RootTabs = TabNavigator(
     tabBarOptions: {
       showIcon: true,
       labelStyle: {
-        fontSize: 12
+        fontSize: 12,
       },
       style: {
-        backgroundColor: Style.globalColor
-      }
-    }
-  }
+        backgroundColor: Style.globalColor,
+      },
+    },
+  },
 )
-
-export default RootTabs

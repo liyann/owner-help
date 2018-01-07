@@ -11,3 +11,7 @@ export const repairList = [
   { desc: '水工类', value: 6 },
   { desc: '其他类型', value: 7 },
 ]
+
+export const primaryStyles={
+  mainColor:'#5067FF'
+}
